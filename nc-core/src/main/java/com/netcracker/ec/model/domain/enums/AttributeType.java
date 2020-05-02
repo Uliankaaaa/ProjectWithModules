@@ -20,6 +20,15 @@ public enum AttributeType {
     private Integer id;
     private String name;
 
+    public static AttributeType getAttributeById(Integer id) {
+        for (AttributeType value : values()) {
+            if (value.id.equals(id)) {
+                return value;
+            }
+        }
+        return null;
+    }
+
     public static AttributeType valueOf(Integer id) {
         return Arrays.stream(values())
                 .filter(value -> value.getId().equals(id))

@@ -8,9 +8,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class NcEntity {
-    private final Integer id;
+    private Integer id;
+    private String name;
+
+    public NcEntity() {
+    }
+/*    private final Integer id;
     @Setter()
     private String name;
 
@@ -44,5 +50,5 @@ public class NcEntity {
 
     public String getStringValue(Integer attrId) {
         return new NcParamsServiceImpl().selectStringValue(id, attrId);
-    }
+    }*/
 }

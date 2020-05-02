@@ -14,7 +14,7 @@ import java.util.Set;
 public class NcAttributeServiceImpl implements NcAttributeService {
     private static final DbWorker DB_WORKER = DbWorker.getInstance();
 
-    @Override
+   @Override
     public Set<NcAttribute> getAttributesByObjectTypeAndAttrSchema(Integer otId, Integer attrSchemaId) {
         String query = Queries.getQuery("get_attributes_by_ot_and_schema");
         return getNcAttributesByResultSet(DB_WORKER.executeSelectQuery(query, otId, attrSchemaId));
@@ -49,11 +49,12 @@ public class NcAttributeServiceImpl implements NcAttributeService {
     }
 
     private NcAttribute createNcAttributeByResultSet(ResultSet resultSet) throws SQLException {
-        NcAttribute ncAttribute = new NcAttribute(resultSet.getInt(1),
+      /*  NcAttribute ncAttribute = new NcAttribute(resultSet.getInt(1),
                 resultSet.getString(2),
                 resultSet.getInt(3),
                 new NcAttrTypeDefServiceImpl().getNcAttrTypeDefById(resultSet.getInt(4)));
         resultSet.close();
-        return ncAttribute;
+        return ncAttribute;*/
+      return null;
     }
 }

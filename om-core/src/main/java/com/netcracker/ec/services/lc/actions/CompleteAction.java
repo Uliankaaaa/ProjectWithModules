@@ -11,6 +11,6 @@ public class CompleteAction implements LifeCycleAction {
     public void execute(NcObject object) {
         Order order = (Order) object;
         Date date = Calendar.getInstance().getTime();
-        order.setCompletionDate(date.toString());
+//        order.setCompletionDate(date.toString());
     }
 }

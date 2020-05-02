@@ -28,6 +28,7 @@ public class NcAttrTypeDefServiceImpl implements NcAttrTypeDefService {
                 : null;
         int attrTypeDefId = resultSet.getInt(1);
         resultSet.close();
-        return new NcAttrTypeDef(attrTypeDefId, attributeType, objectType);
+      //  return new NcAttrTypeDef(attrTypeDefId, attributeType, objectType);
+        return null;
     }
 }

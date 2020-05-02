@@ -8,6 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class NcAttrTypeDef {
     private Integer id;
-    private AttributeType type;
     private NcObjectType objectType;
+    private Integer type;
+
+    public NcAttrTypeDef() {
+    }
 }

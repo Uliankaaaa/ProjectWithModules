@@ -1,5 +1,6 @@
 package com.netcracker.ec.model.domain.order;
 
+import com.netcracker.ec.model.db.NcAttribute;
 import com.netcracker.ec.model.db.NcObject;
 import com.netcracker.ec.model.db.NcObjectType;
 import com.netcracker.ec.model.domain.enums.LifeCycleEvent;
@@ -10,20 +11,35 @@ import com.netcracker.ec.services.lc.LifeCycleManager;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.netcracker.ec.common.OmConstants.ATTR_ORDER_COMPLETION_DATE;
 import static com.netcracker.ec.common.OmConstants.ATTR_ORDER_STATUS;
 
 @Getter
 @Setter
 public class Order extends NcObject {
-    public Order(NcObjectType objectType) {
+ /*   public Order(NcObjectType objectType) {
         super(objectType);
         OpfUtils.generateOrderName(this);
         new NcObjectServiceImpl().insert(this);
         setStatus(OrderStatus.NA);
+    }*/
+
+    Map<NcAttribute, String> parameters;
+
+    public Order(NcObjectType objectType) {
+        super(objectType);
+        this.parameters = new HashMap<>();
     }
 
-    public void save() {
+    public Order(Integer id, String name, NcObjectType objectType) {
+        super(id, name, objectType);
+        this.parameters = new HashMap<>();
+    }
+
+ /*   public void save() {
         LifeCycleManager.sendEvent(LifeCycleEvent.INIT, this);
         LifeCycleManager.sendEvent(LifeCycleEvent.CREATE, this);
         LifeCycleManager.sendEvent(LifeCycleEvent.START_PROCESSING, this);
@@ -44,5 +60,5 @@ public class Order extends NcObject {
 
     public void setCompletionDate(String completionDate) {
         setStringValue(ATTR_ORDER_COMPLETION_DATE, completionDate);
-    }
+    }*/
 }

@@ -18,6 +18,11 @@ public class NcObject extends NcEntity {
         this.objectType = objectType;
     }
 
+    public NcObject(Integer id, String name, NcObjectType objectType) {
+        super(id, name);
+        this.objectType = objectType;
+    }
+
     public void setParam(NcAttribute attr, String object) {
         params.put(attr, object);
     }

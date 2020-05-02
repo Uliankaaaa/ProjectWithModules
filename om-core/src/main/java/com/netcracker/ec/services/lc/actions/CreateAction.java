@@ -6,13 +6,15 @@ import com.netcracker.ec.model.domain.order.Order;
 
 import java.util.Map;
 
+import static jdk.nashorn.internal.runtime.regexp.joni.constants.NodeType.LIST;
+
 public class CreateAction implements LifeCycleAction {
     @Override
     public void execute(NcObject object) {
         Order order = (Order) object;
         for (Map.Entry<NcAttribute, String> param : order.getParams().entrySet()) {
             NcAttribute attribute = param.getKey();
-            switch (attribute.getAttrTypeDef().getType()) {
+           /* switch (attribute.getAttrTypeDef().getType()) {
                 case LIST:
                     order.setListValueId(attribute.getId(), Integer.parseInt(param.getValue()));
                     break;
@@ -22,7 +24,7 @@ public class CreateAction implements LifeCycleAction {
                 default:
                     order.setStringValue(attribute.getId(), param.getValue());
                     break;
-            }
+            }*/
         }
     }
 }

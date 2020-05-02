@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+//import com.netcracker.ec.view.Printer;
+
 
 @Slf4j
 public class DbWorker {
@@ -98,5 +100,25 @@ public class DbWorker {
             }
         }
         return stm;
+    }
+
+    public ResultSet executeSelect(String request) {
+        try {
+            PreparedStatement ps = connection.prepareStatement(request);
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void executeInsert(String request) {
+        try {
+            PreparedStatement ps = connection.prepareStatement(request);
+            ps.execute();
+        } catch (SQLException e) {
+        //    Printer.print(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
