@@ -7,9 +7,6 @@ import com.netcracker.ec.provisioning.operations.ExitOperation;
 import com.netcracker.ec.provisioning.operations.Operation;
 import com.netcracker.ec.provisioning.operations.ShowOrdersOperation;
 import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
-import com.netcracker.ec.services.db.impl.NcObjectService;
-import com.netcracker.ec.services.db.impl.NcObjectTypeService;
-import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
 import com.netcracker.ec.provisioning.operations.CreateOrderOperation;
@@ -58,28 +55,28 @@ public class Console {
         return operation;
     }
 
-    public static void printAvailableOperations() {
+    private static void printAvailableOperations() {
         System.out.println("  Operations:");
         Arrays.stream(OperationType.values()).forEach(System.out::println);
     }
 
     public String getAttributeValue(NcAttribute attr) {
         Printer.print(attr.getName() + ": ");
-        if(attr.getName().equals("Order Status")){
+        if (attr.getName().equals("Order Status")) {
             Printer.print("Entering");
             return "Entering";
         }
-        if(attr.getName().equals("Order Aim")){
+        if (attr.getName().equals("Order Aim")) {
             Printer.print("New");
             return "New";
         }
-        if(attr.getAttrTypeDef().getType().equals(AttributeType.LIST.getId())){
+        if (attr.getAttrTypeDef().getType().equals(AttributeType.LIST.getId())) {
             List<NcEntity> ncEntities = new NcListValueServiceImpl().getNcListValuesAsEntitiesByNcAttrTypeDefId(attr.getAttrTypeDef().getId());
-            for (NcEntity ncEntity: ncEntities) {
-               Printer.print(ncEntity.getName() + ": " + ncEntity.getId());
+            for (NcEntity ncEntity : ncEntities) {
+                Printer.print(ncEntity.getName() + ": " + ncEntity.getId());
             }
         }
-    /*    if (attr.getAttrTypeDef().getType().equals(AttributeType.REFERENCE.getId())){
+ /*       if (attr.getAttrTypeDef().getType().equals(AttributeType.REFERENCE.getId())){
             Integer reference = attr.getReferenceId(attr.getId());
             Printer.print(reference.toString());
         }*/
@@ -104,7 +101,6 @@ public class Console {
         operationsMap.forEach((key, value) -> System.out.println(key + " - " + value));
     }
 
-
     public boolean getSaveDialogueAnswer() {
         Printer.print("Save order?[Y/N]");
         return UserInput.getSaveDialogueAnswer();
@@ -117,7 +113,7 @@ public class Console {
 
     public Integer nextAvailableOperation(Set<Integer> availableOperationsSet) {
         Integer id = 0;
-        while (!availableOperationsSet.contains(id)){
+        while (!availableOperationsSet.contains(id)) {
             id = UserInput.nextOperationId();
         }
         return id;

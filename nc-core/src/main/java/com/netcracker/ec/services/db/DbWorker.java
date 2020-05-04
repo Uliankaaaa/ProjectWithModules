@@ -47,9 +47,9 @@ public class DbWorker {
     @SneakyThrows
     public ResultSet executeSelectQuery(String query, Object... params) {
         PreparedStatement stm = prepareStatement(query, params);
-        ResultSet resultSet = stm.executeQuery();
+      //  ResultSet resultSet = stm.executeQuery();
      //   stm.close();
-        return resultSet;
+        return stm.executeQuery();
     }
 
     @SneakyThrows
@@ -98,24 +98,5 @@ public class DbWorker {
             }
         }
         return stm;
-    }
-
-    public ResultSet executeSelect(String request) {
-        try {
-            PreparedStatement ps = connection.prepareStatement(request);
-            return ps.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public void executeInsert(String request) {
-        try {
-            PreparedStatement ps = connection.prepareStatement(request);
-            ps.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

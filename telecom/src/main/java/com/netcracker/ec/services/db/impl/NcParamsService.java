@@ -25,7 +25,7 @@ public class NcParamsService {
                             "on a.attr_id = p.attr_id " +
                             "where object_id = %d;",
                     id);
-            ResultSet resultSet = dbWorker.executeSelect(sqlQuery);
+            ResultSet resultSet = dbWorker.executeSelectQuery(sqlQuery);
             while (resultSet.next()) {
                 params.put(
                         new NcAttribute(
@@ -52,7 +52,7 @@ public class NcParamsService {
                     objectId,
                     attr.getId(),
                     value);
-            dbWorker.executeInsert(sqlQuery);
+            dbWorker.executeQuery(sqlQuery);
 
     }
 }
