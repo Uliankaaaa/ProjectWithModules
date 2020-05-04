@@ -1,5 +1,7 @@
 package com.netcracker.ec.services.db.impl;
 
+import com.netcracker.ec.model.db.NcAttrTypeDef;
+import com.netcracker.ec.model.db.NcAttribute;
 import com.netcracker.ec.model.db.NcObjectType;
 import com.netcracker.ec.model.domain.order.Order;
 import com.netcracker.ec.services.db.DbWorker;
@@ -34,7 +36,7 @@ public class NcObjectService {
                     "inner join nc_object_types t " +
                     "on o.object_type_id = t.object_type_id " +
                     "where t.parent_id = 2;";
-            ResultSet resultSet = dbWorker.executeSelect(sqlQuery);
+            ResultSet resultSet = dbWorker.executeSelectQuery(sqlQuery);
             while (resultSet.next()) {
                 orders.add(
                         new Order(
@@ -67,7 +69,7 @@ public class NcObjectService {
                         "where t.parent_id = 2 " +
                         "and o.object_type_id = %d;", id);
 
-                ResultSet resultSet = dbWorker.executeSelect(sqlQuery);
+                ResultSet resultSet = dbWorker.executeSelectQuery(sqlQuery);
                 while (resultSet.next()) {
                     orders.add(
                             new Order(
@@ -88,14 +90,19 @@ public class NcObjectService {
             return orders;
         }
 
+        public ResultSet selectListValues (NcAttribute attr){
+            String query = "select * from nc_list_values where attr_type_def_id = " + attr.getAttrTypeDef().getId();
+            return dbWorker.executeSelectQuery(query);
+        }
+
         public ResultSet selectOrdersObject () {
             String sqlQuery = "select * from nc_objects o, nc_object_types ot\n" +
                     " where o.object_type_id = ot.object_type_id and ot.parent_id = 2";
 
-            return dbWorker.executeSelect(sqlQuery);
+            return dbWorker.executeSelectQuery(sqlQuery);
         }
 
-        public ResultSet selectOrder ( int id){
+        public ResultSet selectOrder (int id){
             String sqlQuery = "select a.attr_id, ao.object_type_id," +
                     "a.name, a.attr_type_def_id, d.type " +
                     "from nc_attr_object_types ao " +

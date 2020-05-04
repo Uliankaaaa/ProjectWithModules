@@ -1,6 +1,7 @@
 package com.netcracker.ec.provisioning.operations;
 
 import com.netcracker.ec.model.db.NcAttribute;
+import com.netcracker.ec.model.db.NcListValue;
 import com.netcracker.ec.model.db.NcObjectType;
 import com.netcracker.ec.services.console.Console;
 import com.netcracker.ec.services.db.impl.NcAttrService;

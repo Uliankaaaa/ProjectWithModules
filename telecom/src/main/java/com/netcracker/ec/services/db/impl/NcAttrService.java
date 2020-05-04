@@ -30,7 +30,7 @@ public class NcAttrService {
                             "where ao.object_type_id = 2 or ao.object_type_id = %d;",
                             id);
 
-            ResultSet resultSet = dbWorker.executeSelect(sqlQuery);
+            ResultSet resultSet = dbWorker.executeSelectQuery(sqlQuery);
             while (resultSet.next()) {
                 attributes.add(
                         new NcAttribute(

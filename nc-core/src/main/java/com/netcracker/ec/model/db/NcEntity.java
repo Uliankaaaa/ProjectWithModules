@@ -16,13 +16,14 @@ public class NcEntity {
 
     public NcEntity() {
     }
+
 /*    private final Integer id;
     @Setter()
     private String name;
 
     public NcEntity() {
         this.id = DbWorker.getInstance().generateId();
-    }
+    }*/
 
     public String toFormattedOutput() {
         return id + " - " + name;
@@ -50,5 +51,5 @@ public class NcEntity {
 
     public String getStringValue(Integer attrId) {
         return new NcParamsServiceImpl().selectStringValue(id, attrId);
-    }*/
+    }
 }

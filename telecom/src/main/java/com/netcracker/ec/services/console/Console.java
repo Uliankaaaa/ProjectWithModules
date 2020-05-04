@@ -1,16 +1,22 @@
 package com.netcracker.ec.services.console;
 
-import com.netcracker.ec.model.db.NcAttribute;
+import com.netcracker.ec.model.db.*;
+import com.netcracker.ec.model.domain.enums.AttributeType;
 import com.netcracker.ec.model.domain.enums.OperationType;
 import com.netcracker.ec.provisioning.operations.ExitOperation;
 import com.netcracker.ec.provisioning.operations.Operation;
 import com.netcracker.ec.provisioning.operations.ShowOrdersOperation;
+import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
+import com.netcracker.ec.services.db.impl.NcObjectService;
+import com.netcracker.ec.services.db.impl.NcObjectTypeService;
+import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
 import com.netcracker.ec.provisioning.operations.CreateOrderOperation;
 import com.netcracker.ec.model.domain.order.Order;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,6 +65,24 @@ public class Console {
 
     public String getAttributeValue(NcAttribute attr) {
         Printer.print(attr.getName() + ": ");
+        if(attr.getName().equals("Order Status")){
+            Printer.print("Entering");
+            return "Entering";
+        }
+        if(attr.getName().equals("Order Aim")){
+            Printer.print("New");
+            return "New";
+        }
+        if(attr.getAttrTypeDef().getType().equals(AttributeType.LIST.getId())){
+            List<NcEntity> ncEntities = new NcListValueServiceImpl().getNcListValuesAsEntitiesByNcAttrTypeDefId(attr.getAttrTypeDef().getId());
+            for (NcEntity ncEntity: ncEntities) {
+               Printer.print(ncEntity.getName() + ": " + ncEntity.getId());
+            }
+        }
+    /*    if (attr.getAttrTypeDef().getType().equals(AttributeType.REFERENCE.getId())){
+            Integer reference = attr.getReferenceId(attr.getId());
+            Printer.print(reference.toString());
+        }*/
         return UserInput.inputString("");
     }
 
@@ -92,10 +116,10 @@ public class Console {
     }
 
     public Integer nextAvailableOperation(Set<Integer> availableOperationsSet) {
-        Integer id;
-        do {
+        Integer id = 0;
+        while (!availableOperationsSet.contains(id)){
             id = UserInput.nextOperationId();
-        } while (!availableOperationsSet.contains(id));
+        }
         return id;
     }
 }

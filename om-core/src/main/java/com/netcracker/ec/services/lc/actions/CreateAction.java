@@ -14,17 +14,17 @@ public class CreateAction implements LifeCycleAction {
         Order order = (Order) object;
         for (Map.Entry<NcAttribute, String> param : order.getParams().entrySet()) {
             NcAttribute attribute = param.getKey();
-           /* switch (attribute.getAttrTypeDef().getType()) {
+            switch (attribute.getAttrTypeDef().getType()) {
                 case LIST:
                     order.setListValueId(attribute.getId(), Integer.parseInt(param.getValue()));
                     break;
-                case REFERENCE:
+             /*   case REFERENCE:
                     order.setReferenceId(attribute.getId(), Integer.parseInt(param.getValue()));
-                    break;
+                    break;  */
                 default:
                     order.setStringValue(attribute.getId(), param.getValue());
                     break;
-            }*/
+            }
         }
     }
 }

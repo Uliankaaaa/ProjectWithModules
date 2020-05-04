@@ -20,11 +20,11 @@ import static com.netcracker.ec.common.OmConstants.ATTR_ORDER_STATUS;
 @Getter
 @Setter
 public class Order extends NcObject {
- /*   public Order(NcObjectType objectType) {
+/*    public Order(NcObjectType objectType) {
         super(objectType);
         OpfUtils.generateOrderName(this);
         new NcObjectServiceImpl().insert(this);
-        setStatus(OrderStatus.NA);
+     //   setStatus(OrderStatus.NA);
     }*/
 
     Map<NcAttribute, String> parameters;
@@ -39,7 +39,7 @@ public class Order extends NcObject {
         this.parameters = new HashMap<>();
     }
 
- /*   public void save() {
+    public void save() {
         LifeCycleManager.sendEvent(LifeCycleEvent.INIT, this);
         LifeCycleManager.sendEvent(LifeCycleEvent.CREATE, this);
         LifeCycleManager.sendEvent(LifeCycleEvent.START_PROCESSING, this);
@@ -60,5 +60,5 @@ public class Order extends NcObject {
 
     public void setCompletionDate(String completionDate) {
         setStringValue(ATTR_ORDER_COMPLETION_DATE, completionDate);
-    }*/
+    }
 }

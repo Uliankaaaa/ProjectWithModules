@@ -14,7 +14,7 @@ public class IdGenerator {
     public static int generateId() throws SQLException {
         String sqlQuery = "select getNcId();";
 
-        ResultSet resultSet = DbWorker.getInstance().executeSelect(sqlQuery);
+        ResultSet resultSet = DbWorker.getInstance().executeSelectQuery(sqlQuery);
         resultSet.next();
         int id = resultSet.getInt(1);
         resultSet.close();

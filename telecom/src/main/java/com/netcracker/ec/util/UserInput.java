@@ -9,7 +9,7 @@ public class UserInput {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final String YES = "Y";
- //   private static final String NO = "N";
+    //   private static final String NO = "N";
 
     public static String inputString(String msg) {
         String value;
@@ -35,7 +35,13 @@ public class UserInput {
     }
 
     public static Integer nextOperationId() {
-        return scanner.nextInt();
+        while (true) {
+            if (scanner.hasNextInt()) {
+                return scanner.nextInt();
+            } else {
+                scanner.next();
+            }
+        }
     }
 
     public static Integer getOrderTypeId(Set<Integer> numberSet) {
