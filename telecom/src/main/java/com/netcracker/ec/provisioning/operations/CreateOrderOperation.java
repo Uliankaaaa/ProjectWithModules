@@ -36,7 +36,6 @@ public class CreateOrderOperation implements Operation {
 
         Integer objectTypeId = console.nextAvailableOperation(orderObjectTypeMap.keySet());
         List<NcAttribute> attributeList = ncAttributeService.getAttributesByOrderType(objectTypeId);
-      //  Set<NcAttribute> attributeList = new NcAttributeServiceImpl().getAttributesByObjectType(objectTypeId);
 
         NcObjectType selectedObjectType = new NcObjectTypeServiceImpl().getNcObjectTypeById(objectTypeId);
 
