@@ -53,7 +53,12 @@ public class NcAttributeServiceImpl implements NcAttributeService {
     private NcAttribute createNcAttributeByResultSet(ResultSet resultSet) throws SQLException {
         return new NcAttribute(resultSet.getInt(1),
                 resultSet.getString(2),
+<<<<<<< HEAD
                 //resultSet.getInt(3),
                 new NcAttrTypeDefServiceImpl().getNcAttrTypeDefById(resultSet.getInt(3)));
+=======
+                resultSet.getInt(3),
+                new NcAttrTypeDefServiceImpl().getNcAttrTypeDefById(resultSet.getInt(4)));
+>>>>>>> master
     }
 }

@@ -47,8 +47,11 @@ public class DbWorker {
     @SneakyThrows
     public ResultSet executeSelectQuery(String query, Object... params) {
         PreparedStatement stm = prepareStatement(query, params);
+<<<<<<< HEAD
       //  ResultSet resultSet = stm.executeQuery();
      //   stm.close();
+=======
+>>>>>>> master
         return stm.executeQuery();
     }
 
