@@ -29,6 +29,12 @@ public class NcObjectServiceImpl extends NcEntityServiceImpl implements NcObject
     }
 
     @Override
+    public List<NcEntity> getNcObjectsAsEntitiesByObjectTypeId(Integer objectTypeId) {
+        String query = Queries.getQuery("get_objects_by_ot");
+        return getNcEntitiesByResultSet(DB_WORKER.executeSelectQuery(query, objectTypeId));
+    }
+
+    @Override
     public void insert(NcObject object) {
         String query = Queries.getQuery("insert_object");
         DB_WORKER.executeQuery(query, object.getId(), object.getName(), object.getObjectType().getId(), object.getDescription());

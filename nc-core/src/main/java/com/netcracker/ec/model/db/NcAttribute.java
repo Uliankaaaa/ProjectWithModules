@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class NcAttribute extends NcEntity {
     private NcAttrTypeDef attrTypeDef;
-//    private Integer attrSchemaId;
+    private Integer attrSchemaId;
 
-    public NcAttribute(Integer id, String name, NcAttrTypeDef attrTypeDef) {
+    public NcAttribute(Integer id, String name, Integer attrSchemaId, NcAttrTypeDef attrTypeDef) {
         super(id, name);
-//        this.attrSchemaId = attrSchemaId;
+        this.attrSchemaId = attrSchemaId;
         this.attrTypeDef = attrTypeDef;
     }
 }

@@ -81,25 +81,25 @@ public class ShowOrdersOperation implements Operation {
 
 package com.netcracker.ec.provisioning.operations;
 
+import com.netcracker.ec.model.db.NcObjectType;
+import com.netcracker.ec.services.db.impl.NcObjectTypeServiceImpl;
+import com.netcracker.ec.services.db.impl.NcParamsService;
 import com.netcracker.ec.services.console.Console;
 import com.netcracker.ec.services.db.impl.NcObjectService;
-import com.netcracker.ec.services.db.impl.NcObjectTypeServiceLast;
-import com.netcracker.ec.services.db.impl.NcParamsService;
 import com.netcracker.ec.model.domain.order.Order;
+import com.netcracker.ec.services.db.impl.NcParamsServiceImpl;
+import com.netcracker.ec.util.UserInput;
+import com.netcracker.ec.view.Printer;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ShowOrdersOperation implements Operation {
-    private final NcObjectTypeServiceLast ncObjectTypeServiceLast;
     private final NcObjectService ncObjectService;
     private final NcParamsService ncParamsService;
 
     private final Console console = Console.getInstance();
 
     public ShowOrdersOperation() {
-        this.ncObjectTypeServiceLast = new NcObjectTypeServiceLast();
         this.ncObjectService = new NcObjectService();
         this.ncParamsService = new NcParamsService();
     }
@@ -108,9 +108,10 @@ public class ShowOrdersOperation implements Operation {
     public void execute() {
         System.out.println("Please Select Operation.");
 
-        Map<Integer, String> operationModifications = getOperationModificationsMap();
-        console.printAvailableOperations(operationModifications);
-        Integer operationModification = console.nextAvailableOperation(operationModifications.keySet());
+        Printer.print("1 - Show All Orders\n" +
+                "2 - Show Orders Of A Specific Object Type");
+        Integer operationModification = UserInput.nextOperationId();
+
         switch (operationModification) {
             case 1:
                 showAllOrders();
@@ -134,10 +135,10 @@ public class ShowOrdersOperation implements Operation {
     }
 
     private void showOrderOfASpecificObjectType() {
-        Map<Integer, String> orderObjectTypeMap = ncObjectTypeServiceLast.getOrdersObjectTypeNameMap();
-        console.printAvailableOperations(orderObjectTypeMap);
+        List<NcObjectType> objectTypesList = new NcObjectTypeServiceImpl().getObjectTypesByParentId(2);
+        objectTypesList.forEach(objectType -> Printer.print(objectType.toFormattedOutput()));
 
-        Integer objectTypeId = console.nextAvailableOperation(orderObjectTypeMap.keySet());
+        Integer objectTypeId = UserInput.nextOperationId();
         List<Order> orders = ncObjectService.getOrdersByObjectTypeId(objectTypeId);
 
         initOrdersParameters(orders);
@@ -145,16 +146,9 @@ public class ShowOrdersOperation implements Operation {
         printOrders(orders);
     }
 
-    private Map<Integer, String> getOperationModificationsMap() {
-        Map<Integer, String> operationModifications = new HashMap<>();
-        operationModifications.put(1, "Show All Orders");
-        operationModifications.put(2, "Show Orders Of A Specific Object Type");
-        return operationModifications;
-    }
 
     private void initOrdersParameters(List<Order> orders) {
-        orders.forEach(order -> order.setParameters(
-                ncParamsService.getParamsByObjectId(order.getId())));
+      //  orders.forEach(order -> order.setParameters(ncObjectService.getOrdersByObjectTypeId(order.getId()));
     }
 
     private void printOrders(List<Order> orders) {

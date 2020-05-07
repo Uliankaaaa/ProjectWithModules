@@ -6,9 +6,11 @@ import com.netcracker.ec.model.domain.enums.OperationType;
 import com.netcracker.ec.provisioning.operations.ExitOperation;
 import com.netcracker.ec.provisioning.operations.Operation;
 import com.netcracker.ec.provisioning.operations.ShowOrdersOperation;
-import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
+import com.netcracker.ec.services.db.impl.NcObjectServiceImpl;
+import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
+import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
 import com.netcracker.ec.provisioning.operations.CreateOrderOperation;
 import com.netcracker.ec.model.domain.order.Order;
 
@@ -64,22 +66,26 @@ public class Console {
         Printer.print(attr.getName() + ": ");
         if (attr.getName().equals("Order Status")) {
             Printer.print("Entering");
-            return "Entering";
+            return "33";
         }
         if (attr.getName().equals("Order Aim")) {
             Printer.print("New");
             return "New";
         }
-        if (attr.getAttrTypeDef().getType().equals(AttributeType.LIST.getId())) {
-            List<NcEntity> ncEntities = new NcListValueServiceImpl().getNcListValuesAsEntitiesByNcAttrTypeDefId(attr.getAttrTypeDef().getId());
+        if (attr.getAttrTypeDef().getType().getId().equals(AttributeType.LIST.getId())) {
+            List<NcEntity> ncEntities =
+                    new NcListValueServiceImpl().getNcListValuesAsEntitiesByNcAttrTypeDefId(attr.getAttrTypeDef().getId());
             for (NcEntity ncEntity : ncEntities) {
-                Printer.print(ncEntity.getName() + ": " + ncEntity.getId());
+                Printer.print(ncEntity.toFormattedOutput());
             }
         }
- /*       if (attr.getAttrTypeDef().getType().equals(AttributeType.REFERENCE.getId())){
-            Integer reference = attr.getReferenceId(attr.getId());
-            Printer.print(reference.toString());
-        }*/
+        if (attr.getAttrTypeDef().getType().getId().equals(AttributeType.REFERENCE.getId())){
+            List<NcEntity> ncEntities =
+                    new NcObjectServiceImpl().getNcObjectsAsEntitiesByObjectTypeId(attr.getAttrTypeDef().getObjectType().getId());
+            for (NcEntity ncEntity : ncEntities) {
+                Printer.print(ncEntity.toFormattedOutput());
+            }
+        }
         return UserInput.inputString("");
     }
 
@@ -88,7 +94,7 @@ public class Console {
         stringBuilder.append("Order name: ").
                 append(order.getName()).
                 append("\n");
-        order.getParameters().forEach((key, value) ->
+        order.getParams().forEach((key, value) ->
                 stringBuilder.append("  ")
                         .append(key.getName())
                         .append(": ")

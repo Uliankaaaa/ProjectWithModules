@@ -12,7 +12,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static com.netcracker.ec.common.OmConstants.ATTR_ORDER_COMPLETION_DATE;
 import static com.netcracker.ec.common.OmConstants.ATTR_ORDER_STATUS;
@@ -20,23 +22,23 @@ import static com.netcracker.ec.common.OmConstants.ATTR_ORDER_STATUS;
 @Getter
 @Setter
 public class Order extends NcObject {
-/*    public Order(NcObjectType objectType) {
+ /*   public Order(NcObjectType objectType) {
         super(objectType);
         OpfUtils.generateOrderName(this);
         new NcObjectServiceImpl().insert(this);
-     //   setStatus(OrderStatus.NA);
+        setStatus(OrderStatus.NA);
     }*/
 
-    Map<NcAttribute, String> parameters;
+    Set<NcAttribute> parameters;
 
     public Order(NcObjectType objectType) {
         super(objectType);
-        this.parameters = new HashMap<>();
+        this.parameters = new HashSet<>();
     }
 
     public Order(Integer id, String name, NcObjectType objectType) {
         super(id, name, objectType);
-        this.parameters = new HashMap<>();
+        this.parameters = new HashSet<>();
     }
 
     public void save() {

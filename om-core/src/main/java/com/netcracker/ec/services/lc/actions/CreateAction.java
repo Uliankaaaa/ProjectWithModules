@@ -3,10 +3,7 @@ package com.netcracker.ec.services.lc.actions;
 import com.netcracker.ec.model.db.NcAttribute;
 import com.netcracker.ec.model.db.NcObject;
 import com.netcracker.ec.model.domain.order.Order;
-
 import java.util.Map;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.constants.NodeType.LIST;
 
 public class CreateAction implements LifeCycleAction {
     @Override
@@ -18,9 +15,9 @@ public class CreateAction implements LifeCycleAction {
                 case LIST:
                     order.setListValueId(attribute.getId(), Integer.parseInt(param.getValue()));
                     break;
-             /*   case REFERENCE:
+                case REFERENCE:
                     order.setReferenceId(attribute.getId(), Integer.parseInt(param.getValue()));
-                    break;  */
+                    break;
                 default:
                     order.setStringValue(attribute.getId(), param.getValue());
                     break;

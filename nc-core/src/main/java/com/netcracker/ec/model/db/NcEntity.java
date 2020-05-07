@@ -11,19 +11,19 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class NcEntity {
-    private Integer id;
+/*    private Integer id;
     private String name;
 
     public NcEntity() {
     }
-
-/*    private final Integer id;
+*/
+    private final Integer id;
     @Setter()
     private String name;
 
     public NcEntity() {
         this.id = DbWorker.getInstance().generateId();
-    }*/
+    }
 
     public String toFormattedOutput() {
         return id + " - " + name;
