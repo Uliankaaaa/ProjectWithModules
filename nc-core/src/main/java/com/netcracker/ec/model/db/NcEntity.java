@@ -11,12 +11,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class NcEntity {
-/*    private Integer id;
-    private String name;
-
-    public NcEntity() {
-    }
-*/
     private final Integer id;
     @Setter()
     private String name;

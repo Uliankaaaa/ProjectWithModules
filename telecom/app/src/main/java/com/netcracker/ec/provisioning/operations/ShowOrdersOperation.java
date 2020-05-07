@@ -81,26 +81,28 @@ public class ShowOrdersOperation implements Operation {
 
 package com.netcracker.ec.provisioning.operations;
 
+import com.netcracker.ec.model.db.NcAttribute;
 import com.netcracker.ec.model.db.NcObjectType;
+import com.netcracker.ec.model.domain.enums.AttributeType;
+import com.netcracker.ec.model.domain.order.OrderServiceImpl;
 import com.netcracker.ec.services.db.impl.NcObjectTypeServiceImpl;
 import com.netcracker.ec.services.db.impl.NcParamsService;
 import com.netcracker.ec.services.console.Console;
-import com.netcracker.ec.services.db.impl.NcObjectService;
 import com.netcracker.ec.model.domain.order.Order;
 import com.netcracker.ec.services.db.impl.NcParamsServiceImpl;
+import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
 
 import java.util.List;
+import java.util.Map;
 
 public class ShowOrdersOperation implements Operation {
-    private final NcObjectService ncObjectService;
     private final NcParamsService ncParamsService;
 
     private final Console console = Console.getInstance();
 
     public ShowOrdersOperation() {
-        this.ncObjectService = new NcObjectService();
         this.ncParamsService = new NcParamsService();
     }
 
@@ -125,10 +127,14 @@ public class ShowOrdersOperation implements Operation {
     }
 
     private void showAllOrders() {
-        List<Order> orders = ncObjectService.getOrders();
+        List<Order> orders = new OrderServiceImpl().getOrders();
 
-        orders.forEach(order -> order.setParameters(
-                ncParamsService.getParamsByObjectId(order.getId())));
+        orders.forEach(order ->
+               // order.setParameters(
+                getParams(
+               ncParamsService.getParamsByObjectId(order.getId()), order.getId()
+               // getParams(order.getParams(), order.getId()));
+        ));
 
         initOrdersParameters(orders);
         printOrders(orders);
@@ -139,19 +145,31 @@ public class ShowOrdersOperation implements Operation {
         objectTypesList.forEach(objectType -> Printer.print(objectType.toFormattedOutput()));
 
         Integer objectTypeId = UserInput.nextOperationId();
-        List<Order> orders = ncObjectService.getOrdersByObjectTypeId(objectTypeId);
+        List<Order> orders = new OrderServiceImpl().getOrdersByObjectId(objectTypeId);
 
         initOrdersParameters(orders);
 
         printOrders(orders);
     }
 
-
     private void initOrdersParameters(List<Order> orders) {
-      //  orders.forEach(order -> order.setParameters(ncObjectService.getOrdersByObjectTypeId(order.getId()));
+        orders.forEach(order -> getParams(order.getParams(), order.getId()));
     }
 
     private void printOrders(List<Order> orders) {
         orders.forEach(order -> console.printOrderInfo(order));
+    }
+
+    private void getParams(Map<NcAttribute, String> attributesMap, Integer objectId) {
+        attributesMap.forEach((attr, value) -> {
+            if (attr.getAttrTypeDef().getType().getId().equals(AttributeType.LIST.getId())) {
+                new NcParamsServiceImpl().selectStringValue(objectId, attr.getId());
+            }
+            else if (attr.getAttrTypeDef().getType().getId().equals(AttributeType.REFERENCE.getId())) {
+                new NcReferencesServiceImpl().selectReference(objectId, attr.getId());
+            } else {
+                new NcParamsServiceImpl().selectStringValue(objectId, attr.getId());
+            }
+        });
     }
 }
