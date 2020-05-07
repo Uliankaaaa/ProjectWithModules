@@ -11,5 +11,7 @@ public interface NcObjectService extends NcEntityService {
 
     List<NcEntity> getNcObjectsAsEntitiesByObjectType(NcObjectType objectType);
 
+    NcObject getNcObjectById(Integer objectId);
+
     void insert(NcObject object);
 }

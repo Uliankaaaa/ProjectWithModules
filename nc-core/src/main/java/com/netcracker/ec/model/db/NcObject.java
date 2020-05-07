@@ -10,6 +10,8 @@ import java.util.Map;
 
 @Getter
 public class NcObject extends NcEntity {
+    private static final Integer ATTR_CREATED_WHEN = 611;
+
     private final NcObjectType objectType;
     private final Map<NcAttribute, String> params = new HashMap<>();
     @Setter
@@ -22,6 +24,14 @@ public class NcObject extends NcEntity {
 
     public void setParam(NcAttribute attr, String object) {
         params.put(attr, object);
+    }
+
+    public String getCreatedWhen() {
+        return getStringValue(ATTR_CREATED_WHEN);
+    }
+
+    public void setCreatedWhen(String createdWhen) {
+        setStringValue(ATTR_CREATED_WHEN, createdWhen);
     }
 
     public void setReferenceId(Integer attrId, Integer refId) {
