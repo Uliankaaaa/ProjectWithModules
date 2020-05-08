@@ -3,23 +3,36 @@ package com.netcracker.ec.model.db;
 import com.netcracker.ec.services.db.impl.NcParamsServiceImpl;
 import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.netcracker.ec.common.CommonConstants.STR_EMPTY;
+import static com.netcracker.ec.common.CommonConstants.STR_OBJECT_TYPE;
+import static com.netcracker.ec.common.CommonConstants.STR_SPACE;
+import static com.netcracker.ec.common.CommonConstants.STR_TYPE;
+
 @Getter
+@NoArgsConstructor
 public class NcObject extends NcEntity {
     private static final Integer ATTR_CREATED_WHEN = 611;
 
-    private final NcObjectType objectType;
+    private NcObjectType objectType;
     private final Map<NcAttribute, String> params = new HashMap<>();
     @Setter
     private String description;
 
     public NcObject(NcObjectType objectType) {
-        super();
+        super(generateObjectName(objectType));
         this.objectType = objectType;
+    }
+
+    public NcObject(Integer id, String name, NcObjectType objectType, String description) {
+        super(id, name);
+        this.objectType = objectType;
+        this.description = description;
     }
 
     public void setParam(NcAttribute attr, String object) {
@@ -56,5 +69,14 @@ public class NcObject extends NcEntity {
 
     public String getStringValue(Integer attrId) {
         return new NcParamsServiceImpl().selectStringValue(getId(), attrId);
+    }
+
+    private static String generateObjectName(NcObjectType objectType) {
+        String objectTypeName = objectType.getName();
+        return objectTypeName.contains(STR_OBJECT_TYPE)
+                ? objectTypeName.replace(STR_OBJECT_TYPE, STR_EMPTY)
+                : objectTypeName.contains(STR_TYPE)
+                        ? objectTypeName.replace(STR_TYPE, STR_EMPTY)
+                        : objectTypeName + STR_SPACE;
     }
 }
