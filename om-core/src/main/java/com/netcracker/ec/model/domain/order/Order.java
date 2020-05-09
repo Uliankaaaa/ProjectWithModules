@@ -16,7 +16,6 @@ import lombok.Setter;
 import static com.netcracker.ec.common.OmConstants.*;
 import static com.netcracker.ec.services.OpfUtils.getCurrentDate;
 
-
 @Getter
 @Setter
 @NoArgsConstructor

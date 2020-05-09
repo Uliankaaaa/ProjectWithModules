@@ -85,12 +85,9 @@ import com.netcracker.ec.model.db.NcAttribute;
 import com.netcracker.ec.model.db.NcObjectType;
 import com.netcracker.ec.model.domain.enums.AttributeType;
 import com.netcracker.ec.model.domain.order.OrderServiceImpl;
-import com.netcracker.ec.services.db.impl.NcObjectTypeServiceImpl;
-import com.netcracker.ec.services.db.impl.NcParamsService;
+import com.netcracker.ec.services.db.impl.*;
 import com.netcracker.ec.services.console.Console;
 import com.netcracker.ec.model.domain.order.Order;
-import com.netcracker.ec.services.db.impl.NcParamsServiceImpl;
-import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
 
@@ -128,6 +125,10 @@ public class ShowOrdersOperation implements Operation {
 
     private void showAllOrders() {
         List<Order> orders = new OrderServiceImpl().getOrders();
+
+                //добавить метод, который по парент от достанет всё: id объектного типа абстратного ордера (2): нужно
+                //иерархически написать запрос. На уровне сервисов
+        // ncO
 
        // orders.forEach(order ->
                // order.setParameters(

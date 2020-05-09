@@ -10,7 +10,4 @@ public class NcAttrTypeDef {
     private Integer id;
     private AttributeType type;
     private NcObjectType objectType;
-
-    public NcAttrTypeDef() {
-    }
 }

@@ -48,7 +48,7 @@ public class NcAttributeServiceImpl implements NcAttributeService {
     }
 
     @Override
-    public Set<NcAttribute> getParamsByObjectId(Integer objectId){
+    public Set<NcAttribute> getAttributesByObjectId(Integer objectId){
         String query = Queries.getQuery("get_params_by_object_id");
         return getNcAttributesByResultSet(DB_WORKER.executeSelectQuery(query, objectId));
     }

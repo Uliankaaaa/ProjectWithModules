@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
     @SneakyThrows
     private Order createOrderByObjectTypeId(ResultSet resultSet) {
-        return new Order(
+       /* return new Order(
                 resultSet.getInt("object_id"),
                 resultSet.getString("name"),
                 new NcObjectType(
@@ -50,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
                         null
                 )
         ); */
+       return null;
     }
 
 }

@@ -29,19 +29,10 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-<<<<<<< HEAD
 *.iml
-<<<<<<< HEAD
 .idea
-=======
-.idea
->>>>>>> master
-=======
 
 #folders
 /.idea
 /.settings
 target/
-/logs
-/db_scripts
->>>>>>> master

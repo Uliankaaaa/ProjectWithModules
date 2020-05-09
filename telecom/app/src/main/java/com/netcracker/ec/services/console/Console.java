@@ -2,12 +2,11 @@ package com.netcracker.ec.services.console;
 
 import com.netcracker.ec.model.db.*;
 import com.netcracker.ec.model.domain.enums.AttributeType;
-import com.netcracker.ec.model.domain.enums.OperationType;
+import com.netcracker.ec.domain.enums.OperationType;
 import com.netcracker.ec.provisioning.operations.ExitOperation;
 import com.netcracker.ec.provisioning.operations.Operation;
 import com.netcracker.ec.provisioning.operations.ShowOrdersOperation;
 import com.netcracker.ec.services.db.impl.NcObjectServiceImpl;
-import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
 import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
@@ -32,9 +31,9 @@ public class Console {
     public static Operation getNextOperation() {
         Operation operation = null;
         printAvailableOperations();
-        String operationId = UserInput.inputString("Enter operation: ");
-
-        OperationType operationType = OperationType.getOperationById(operationId);
+        Printer.print("Enter operation: ");
+        Integer operationId = UserInput.nextOperationId();
+        OperationType operationType = OperationType.valueOf(operationId);
 
         if (operationType != null) {
             switch (operationType) {
