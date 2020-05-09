@@ -129,12 +129,12 @@ public class ShowOrdersOperation implements Operation {
     private void showAllOrders() {
         List<Order> orders = new OrderServiceImpl().getOrders();
 
-        orders.forEach(order ->
+       // orders.forEach(order ->
                // order.setParameters(
-                getParams(
-               ncParamsService.getParamsByObjectId(order.getId()), order.getId()
+               // getParams(
+               // ncParamsService.getParamsByObjectId(order.getId()), order.getId()
                // getParams(order.getParams(), order.getId()));
-        ));
+       // ));
 
         initOrdersParameters(orders);
         printOrders(orders);
