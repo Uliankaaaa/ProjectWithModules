@@ -6,6 +6,8 @@ import com.netcracker.ec.model.db.NcObjectType;
 import com.netcracker.ec.services.db.DbWorker;
 import com.netcracker.ec.services.db.NcObjectService;
 import com.netcracker.ec.services.db.Queries;
+import lombok.SneakyThrows;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -26,6 +28,12 @@ public class NcObjectServiceImpl extends NcEntityServiceImpl implements NcObject
     public List<NcEntity> getNcObjectsAsEntitiesByObjectType(NcObjectType objectType) {
         String query = Queries.getQuery("get_objects_by_ot");
         return getNcEntitiesByResultSet(DB_WORKER.executeSelectQuery(query, objectType.getId()));
+    }
+
+    @SneakyThrows
+    @Override
+    public NcObject getNcObjectById(Integer objectId) {
+        throw new NotImplementedException();
     }
 
     @Override

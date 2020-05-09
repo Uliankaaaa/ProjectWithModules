@@ -5,18 +5,24 @@ import com.netcracker.ec.services.db.impl.NcParamsServiceImpl;
 import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+<<<<<<< HEAD
 @Setter
+=======
+@NoArgsConstructor
+>>>>>>> master
 @AllArgsConstructor
 public class NcEntity {
-    private final Integer id;
-    @Setter()
+    private Integer id;
+    @Setter
     private String name;
 
-    public NcEntity() {
-        this.id = DbWorker.getInstance().generateId();
+    public NcEntity(String name) {
+        id = DbWorker.getInstance().generateId();
+        this.name = name;
     }
 
     public String toFormattedOutput() {
