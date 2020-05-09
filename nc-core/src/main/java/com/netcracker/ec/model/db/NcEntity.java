@@ -9,11 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-<<<<<<< HEAD
-@Setter
-=======
 @NoArgsConstructor
->>>>>>> master
 @AllArgsConstructor
 public class NcEntity {
     private Integer id;
