@@ -1,22 +1,21 @@
 package com.netcracker.ec.services.console;
 
-import com.netcracker.ec.model.db.*;
-import com.netcracker.ec.model.domain.enums.AttributeType;
 import com.netcracker.ec.domain.enums.OperationType;
+import com.netcracker.ec.model.db.NcAttribute;
+import com.netcracker.ec.model.db.NcEntity;
+import com.netcracker.ec.model.domain.enums.AttributeType;
+import com.netcracker.ec.model.domain.order.Order;
+import com.netcracker.ec.provisioning.operations.CreateOrderOperation;
 import com.netcracker.ec.provisioning.operations.ExitOperation;
 import com.netcracker.ec.provisioning.operations.Operation;
 import com.netcracker.ec.provisioning.operations.ShowOrdersOperation;
+import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
 import com.netcracker.ec.services.db.impl.NcObjectServiceImpl;
 import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
-import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
-import com.netcracker.ec.provisioning.operations.CreateOrderOperation;
-import com.netcracker.ec.model.domain.order.Order;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class Console {
     private static Console console = null;
@@ -63,14 +62,7 @@ public class Console {
 
     public String getAttributeValue(NcAttribute attr) {
         Printer.print(attr.getName() + ": ");
-        if (attr.getName().equals("Order Status")) {
-            Printer.print("Entering");
-            return "33";
-        }
-        if (attr.getName().equals("Order Aim")) {
-            Printer.print("New");
-            return "New";
-        }
+
         if (attr.getAttrTypeDef().getType().getId().equals(AttributeType.LIST.getId())) {
             List<NcEntity> ncEntities =
                     new NcListValueServiceImpl().getNcListValuesAsEntitiesByNcAttrTypeDefId(attr.getAttrTypeDef().getId());
@@ -78,9 +70,9 @@ public class Console {
                 Printer.print(ncEntity.toFormattedOutput());
             }
         }
-        if (attr.getAttrTypeDef().getType().getId().equals(AttributeType.REFERENCE.getId())){
+        if (attr.getAttrTypeDef().getType().getId().equals(AttributeType.REFERENCE.getId())) {
             List<NcEntity> ncEntities =
-                    new NcObjectServiceImpl().getNcObjectsAsEntitiesByObjectTypeId(attr.getAttrTypeDef().getObjectType().getId());
+                    new NcObjectServiceImpl().getNcObjectsAsEntitiesByObjectTypeId(10);
             for (NcEntity ncEntity : ncEntities) {
                 Printer.print(ncEntity.toFormattedOutput());
             }
@@ -102,10 +94,6 @@ public class Console {
         Printer.print(stringBuilder.toString());
     }
 
-    public void printAvailableOperations(Map<Integer, String> operationsMap) {
-        operationsMap.forEach((key, value) -> System.out.println(key + " - " + value));
-    }
-
     public boolean getSaveDialogueAnswer() {
         Printer.print("Save order?[Y/N]");
         return UserInput.getSaveDialogueAnswer();
@@ -114,13 +102,5 @@ public class Console {
     public void close() {
         Printer.print("Exit in process...");
         UserInput.close();
-    }
-
-    public Integer nextAvailableOperation(Set<Integer> availableOperationsSet) {
-        Integer id = 0;
-        while (!availableOperationsSet.contains(id)) {
-            id = UserInput.nextOperationId();
-        }
-        return id;
     }
 }

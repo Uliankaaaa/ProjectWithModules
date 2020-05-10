@@ -12,7 +12,6 @@
         <module>nc-core</module>
         <module>om-core</module>
         <module>telecom</module>
-        <module>telecom</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,7 +33,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.netcracker.Main</mainClass>
+                            <mainClass>telecom.app.src.main.java.com.netcracker.ec.Main.java</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -54,7 +53,7 @@
                             <transformers>
                                 <!-- add Main-Class to manifest file -->
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.netcracker.Main</mainClass>
+                                    <mainClass>telecom.app.src.main.java.com.netcracker.ec.Main.java</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

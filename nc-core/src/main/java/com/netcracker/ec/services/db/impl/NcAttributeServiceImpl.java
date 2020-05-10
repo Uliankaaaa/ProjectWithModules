@@ -8,15 +8,14 @@ import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class NcAttributeServiceImpl implements NcAttributeService {
     private static final DbWorker DB_WORKER = DbWorker.getInstance();
 
-   @Override
+
+    @Override
     public Set<NcAttribute> getAttributesByObjectTypeAndAttrSchema(Integer otId, Integer attrSchemaId) {
         String query = Queries.getQuery("get_attributes_by_ot_and_schema");
         return getNcAttributesByResultSet(DB_WORKER.executeSelectQuery(query, otId, attrSchemaId));
@@ -32,25 +31,6 @@ public class NcAttributeServiceImpl implements NcAttributeService {
     public NcAttribute getAttributeById(Integer attrId) {
         String query = Queries.getQuery("get_attribute_by_id");
         return getNcAttributeByResultSet(DB_WORKER.executeSelectQuery(query, attrId));
-    }
-
-    @SneakyThrows
-    @Override
-    public List<NcAttribute> getAttributesByOrderType(Integer orderId) {
-        String query = Queries.getQuery("get_attributes_by_order_type");
-        ResultSet resultSet = DB_WORKER.executeSelectQuery(query, orderId);
-        List<NcAttribute> attributes = new ArrayList<>();
-        while (resultSet.next()) {
-            attributes.add(createNcAttributeForOrderByResultSet(resultSet));
-        }
-        resultSet.close();
-        return attributes;
-    }
-
-    @Override
-    public Set<NcAttribute> getAttributesByObjectId(Integer objectId){
-        String query = Queries.getQuery("get_params_by_object_id");
-        return getNcAttributesByResultSet(DB_WORKER.executeSelectQuery(query, objectId));
     }
 
     @SneakyThrows
@@ -76,13 +56,5 @@ public class NcAttributeServiceImpl implements NcAttributeService {
                 resultSet.getString(2),
                 resultSet.getInt(3),
                 new NcAttrTypeDefServiceImpl().getNcAttrTypeDefById(resultSet.getInt(4)));
-    }
-
-    private NcAttribute createNcAttributeForOrderByResultSet(ResultSet resultSet) throws SQLException {
-        return new NcAttribute(
-                                resultSet.getInt("attr_id"),
-                                resultSet.getString("name"),
-                                resultSet.getInt("attr_schema_id"),
-                                new NcAttrTypeDefServiceImpl().getNcAttrTypeDefById(resultSet.getInt("attr_type_def_id")));
     }
 }

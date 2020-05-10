@@ -11,8 +11,4 @@ public interface NcAttributeService {
     Set<NcAttribute> getAttributesByObjectType(Integer otId);
 
     NcAttribute getAttributeById(Integer attrId);
-
-    List<NcAttribute> getAttributesByOrderType(Integer orderId);
-
-    Set<NcAttribute> getAttributesByObjectId(Integer objectId);
 }
