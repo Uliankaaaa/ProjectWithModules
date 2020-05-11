@@ -1,8 +1,6 @@
 package com.netcracker.ec.model.db;
 
 import com.netcracker.ec.services.db.DbWorker;
-import com.netcracker.ec.services.db.impl.NcParamsServiceImpl;
-import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

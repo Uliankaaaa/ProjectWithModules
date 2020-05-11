@@ -3,7 +3,6 @@ package com.netcracker.ec.services.lc.actions;
 import com.netcracker.ec.model.db.NcAttribute;
 import com.netcracker.ec.model.db.NcObject;
 import com.netcracker.ec.model.domain.order.Order;
-
 import java.util.Map;
 
 public class CreateAction implements LifeCycleAction {
