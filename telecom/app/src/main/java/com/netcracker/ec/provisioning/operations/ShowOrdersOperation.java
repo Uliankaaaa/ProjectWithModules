@@ -4,7 +4,6 @@ import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
 
 public class ShowOrdersOperation implements Operation {
-
     @Override
     public void execute() {
         System.out.println("Please Select Operation.");
@@ -32,6 +31,4 @@ public class ShowOrdersOperation implements Operation {
     private void showOrderOfASpecificObjectType() {
 
     }
-
-
 }

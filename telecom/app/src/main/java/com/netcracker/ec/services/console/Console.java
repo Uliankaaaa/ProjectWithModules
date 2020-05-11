@@ -1,6 +1,7 @@
 package com.netcracker.ec.services.console;
 
 import com.netcracker.ec.domain.enums.OperationType;
+import com.netcracker.ec.model.db.NcAttrTypeDef;
 import com.netcracker.ec.model.db.NcAttribute;
 import com.netcracker.ec.model.db.NcEntity;
 import com.netcracker.ec.model.domain.enums.AttributeType;
@@ -63,21 +64,25 @@ public class Console {
     public String getAttributeValue(NcAttribute attr) {
         Printer.print(attr.getName() + ": ");
 
-        if (attr.getAttrTypeDef().getType().getId().equals(AttributeType.LIST.getId())) {
+        NcAttrTypeDef ncAttrTypeDef = attr.getAttrTypeDef();
+
+        if (AttributeType.LIST == ncAttrTypeDef.getType()) {
             List<NcEntity> ncEntities =
-                    new NcListValueServiceImpl().getNcListValuesAsEntitiesByNcAttrTypeDefId(attr.getAttrTypeDef().getId());
-            for (NcEntity ncEntity : ncEntities) {
-                Printer.print(ncEntity.toFormattedOutput());
-            }
+                    new NcListValueServiceImpl().getNcListValuesAsEntitiesByNcAttrTypeDefId(ncAttrTypeDef.getId());
+            printNcEntity(ncEntities);
         }
-        if (attr.getAttrTypeDef().getType().getId().equals(AttributeType.REFERENCE.getId())) {
+        if (AttributeType.REFERENCE == ncAttrTypeDef.getType()) {
             List<NcEntity> ncEntities =
                     new NcObjectServiceImpl().getNcObjectsAsEntitiesByObjectTypeId(10);
-            for (NcEntity ncEntity : ncEntities) {
-                Printer.print(ncEntity.toFormattedOutput());
-            }
+            printNcEntity(ncEntities);
         }
         return UserInput.inputString("");
+    }
+
+    private void printNcEntity(List<NcEntity> ncEntities){
+        for (NcEntity ncEntity : ncEntities) {
+            Printer.print(ncEntity.toFormattedOutput());
+        }
     }
 
     public void printOrderInfo(Order order) {

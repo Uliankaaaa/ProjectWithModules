@@ -14,7 +14,6 @@ import java.util.Set;
 public class NcAttributeServiceImpl implements NcAttributeService {
     private static final DbWorker DB_WORKER = DbWorker.getInstance();
 
-
     @Override
     public Set<NcAttribute> getAttributesByObjectTypeAndAttrSchema(Integer otId, Integer attrSchemaId) {
         String query = Queries.getQuery("get_attributes_by_ot_and_schema");

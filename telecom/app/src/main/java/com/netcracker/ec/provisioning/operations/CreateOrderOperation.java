@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 public class CreateOrderOperation implements Operation {
-
     private Console console = Console.getInstance();
 
     @Override
@@ -40,14 +39,14 @@ public class CreateOrderOperation implements Operation {
         }
     }
 
-    private NcObjectType getNcObjectType(List<NcObjectType> objectTypes, Integer objectTypeId){
+    private NcObjectType getNcObjectType(List<NcObjectType> objectTypes, Integer objectTypeId) {
         return objectTypes.stream()
                 .filter(objectType -> objectType.getId().equals(objectTypeId))
                 .findFirst()
                 .orElse(null);
     }
 
-    private Set<NcAttribute> getAttributesByObjectTypeId(Integer objectTypeId){
+    private Set<NcAttribute> getAttributesByObjectTypeId(Integer objectTypeId) {
         return new NcAttributeServiceImpl().getAttributesByObjectTypeAndAttrSchema(objectTypeId,
                 TelecomConstants.TELECOM_OM_SHEMA_ID);
     }
