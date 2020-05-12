@@ -10,5 +10,7 @@ public interface NcAttributeService {
 
     Set<NcAttribute> getAttributesByObjectType(Integer otId);
 
+    Set<NcAttribute> getAttributesByObjectTypeParentIdAndObjectId(Integer otId, Integer objectId);
+
     NcAttribute getAttributeById(Integer attrId);
 }
