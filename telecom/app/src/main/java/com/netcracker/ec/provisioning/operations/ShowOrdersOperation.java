@@ -1,5 +1,6 @@
 package com.netcracker.ec.provisioning.operations;
 
+import com.netcracker.ec.common.TelecomConstants;
 import com.netcracker.ec.model.db.*;
 import com.netcracker.ec.model.domain.enums.AttributeType;
 import com.netcracker.ec.model.domain.order.NewOrder;
@@ -41,9 +42,9 @@ public class ShowOrdersOperation implements Operation {
     }
 
     private void showAllOrders() {
-        List<NcEntity> entities = new NcObjectServiceImpl().getNcObjectsAsEntities();
+        List<NcObject> objects = new NcObjectServiceImpl().getNcObjectsByParentId(TelecomConstants.ABSTRACT_ORDER_PARENT_ID);
 
-        printOrders(entities);
+        printOrders(objects);
     }
 
     private void showOrderOfASpecificObjectType() {
@@ -53,33 +54,32 @@ public class ShowOrdersOperation implements Operation {
         objectTypes.forEach(objectType -> Printer.print(objectType.toFormattedOutput()));
         Integer objectTypeId = UserInput.nextOperationId();
 
-        List<NcEntity> entities = new NcObjectServiceImpl().getNcObjectsAsEntitiesByObjectTypeId(objectTypeId);
+        List<NcObject> objects = new NcObjectServiceImpl().getNcObjectsByObjectTypeId(objectTypeId);
 
-        printOrders(entities);
-
+        printOrders(objects);
     }
 
-    private void printOrders(List<NcEntity> entities){
-        for (NcEntity entity : entities) {
-            Printer.print(entity.toFormattedOutput());
+    private void printOrders(List<NcObject> objects){
+        for (NcObject object :objects) {
+            Printer.print(object.toFormattedOutput());
             Set<NcAttribute> attributes =
-                    new NcAttributeServiceImpl().getAttributesByObjectTypeParentIdAndObjectId(NewOrder.OBJECT_TYPE, entity.getId());
-
+                    new NcAttributeServiceImpl().getAttributesByObjectType(object.getObjectType().getId());
             for (NcAttribute attribute : attributes) {
-                Printer.print("\t" + attribute.getName() + ": " + getParams(attribute, entity.getId()));
+                Printer.print("\t" + attribute.getName() + ": " + getParams(attribute, object));
             }
             Printer.print("\n");
         }
     }
 
-    private String getParams(NcAttribute attr, Integer objectId) {
+    private String getParams(NcAttribute attr, NcObject object) {
         if (AttributeType.LIST == attr.getAttrTypeDef().getType()) {
-            Integer list_value_id = new NcParamsServiceImpl().selectListValueId(objectId, attr.getId());
+            Integer list_value_id = object.getListValueId(attr.getId());
             return new NcListValueServiceImpl().getNcListValueByNcListValueId(list_value_id);
         } else if (AttributeType.REFERENCE == attr.getAttrTypeDef().getType()) {
-             return "" + new NcReferencesServiceImpl().selectReference(objectId, attr.getId());
+            Integer referenceId = object.getReferenceId(attr.getId());
+            return new NcObjectServiceImpl().getNameByID(referenceId);
         } else {
-            return new NcParamsServiceImpl().selectStringValue(objectId, attr.getId());
+            return object.getStringValue(attr.getId());
         }
     }
 }

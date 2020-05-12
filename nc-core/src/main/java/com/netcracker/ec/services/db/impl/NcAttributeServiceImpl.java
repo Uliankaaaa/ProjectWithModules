@@ -27,12 +27,6 @@ public class NcAttributeServiceImpl implements NcAttributeService {
     }
 
     @Override
-    public Set<NcAttribute> getAttributesByObjectTypeParentIdAndObjectId(Integer otId, Integer objectId) {
-        String query = Queries.getQuery("get_attributes_by_object_type_parent_id_and_object_id");
-        return getNcAttributesByResultSet(DB_WORKER.executeSelectQuery(query, otId, objectId));
-    }
-
-    @Override
     public NcAttribute getAttributeById(Integer attrId) {
         String query = Queries.getQuery("get_attribute_by_id");
         return getNcAttributeByResultSet(DB_WORKER.executeSelectQuery(query, attrId));
