@@ -1,23 +1,23 @@
 package com.netcracker.ec.provisioning.operations;
 
 import com.netcracker.ec.common.TelecomConstants;
-import com.netcracker.ec.model.db.*;
+import com.netcracker.ec.model.db.NcAttribute;
+import com.netcracker.ec.model.db.NcObject;
+import com.netcracker.ec.model.db.NcObjectType;
 import com.netcracker.ec.model.domain.enums.AttributeType;
+import com.netcracker.ec.model.domain.order.DisconnectOrder;
 import com.netcracker.ec.model.domain.order.NewOrder;
-import com.netcracker.ec.model.domain.order.Order;
-import com.netcracker.ec.services.console.Console;
-import com.netcracker.ec.services.db.impl.*;
+import com.netcracker.ec.services.db.impl.NcAttributeServiceImpl;
+import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
+import com.netcracker.ec.services.db.impl.NcObjectServiceImpl;
+import com.netcracker.ec.services.db.impl.NcObjectTypeServiceImpl;
 import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class ShowOrdersOperation implements Operation {
-
-    private final Console console = Console.getInstance();
-
     public ShowOrdersOperation() {
     }
 
@@ -42,7 +42,7 @@ public class ShowOrdersOperation implements Operation {
     }
 
     private void showAllOrders() {
-        List<NcObject> objects = new NcObjectServiceImpl().getNcObjectsByParentId(TelecomConstants.ABSTRACT_ORDER_PARENT_ID);
+        List<NcObject> objects = new NcObjectServiceImpl().getNcObjectsByParentId(TelecomConstants.ABSTRACT_OBJECT_TYPE_ID);
 
         printOrders(objects);
     }
@@ -51,6 +51,7 @@ public class ShowOrdersOperation implements Operation {
         Printer.print("Please Select Object Type.");
 
         List<NcObjectType> objectTypes = new NcObjectTypeServiceImpl().getObjectTypesByParentId(NewOrder.OBJECT_TYPE);
+        objectTypes.addAll(new NcObjectTypeServiceImpl().getObjectTypesByParentId(DisconnectOrder.OBJECT_TYPE));
         objectTypes.forEach(objectType -> Printer.print(objectType.toFormattedOutput()));
         Integer objectTypeId = UserInput.nextOperationId();
 
@@ -72,14 +73,17 @@ public class ShowOrdersOperation implements Operation {
     }
 
     private String getParams(NcAttribute attr, NcObject object) {
-        if (AttributeType.LIST == attr.getAttrTypeDef().getType()) {
-            Integer list_value_id = object.getListValueId(attr.getId());
-            return new NcListValueServiceImpl().getNcListValueByNcListValueId(list_value_id);
-        } else if (AttributeType.REFERENCE == attr.getAttrTypeDef().getType()) {
-            Integer referenceId = object.getReferenceId(attr.getId());
-            return new NcObjectServiceImpl().getNameByID(referenceId);
-        } else {
-            return object.getStringValue(attr.getId());
+        AttributeType attrTypeDef = attr.getAttrTypeDef().getType();
+
+        switch (attrTypeDef) {
+            case LIST:
+                Integer listValueId = object.getListValueId(attr.getId());
+                return new NcListValueServiceImpl().getListValueByListValueId(listValueId);
+            case REFERENCE:
+                Integer referenceId = object.getReferenceId(attr.getId());
+                return new NcObjectServiceImpl().getObjectNameByID(referenceId);
+            default:
+                return object.getStringValue(attr.getId());
         }
     }
 }

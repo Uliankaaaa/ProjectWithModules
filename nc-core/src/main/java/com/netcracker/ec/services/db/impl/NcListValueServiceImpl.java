@@ -21,8 +21,8 @@ public class NcListValueServiceImpl extends NcEntityServiceImpl implements NcLis
     }
 
     @Override
-    public String getNcListValueByNcListValueId(Integer ncListValueId){
+    public String getListValueByListValueId(Integer listValueId){
         String query = Queries.getQuery("get_list_value_by_list_value_id");
-        return DB_WORKER.getStringValueByQuery(query, ncListValueId);
+        return DB_WORKER.getStringValueByQuery(query, listValueId);
     }
 }

@@ -42,13 +42,13 @@ public class NcObjectServiceImpl extends NcEntityServiceImpl implements NcObject
     }
 
     @Override
-    public List<NcObject> getNcObjectsByObjectTypeId(Integer otId){
+    public List<NcObject> getNcObjectsByObjectTypeId(Integer objectTypeId){
         String query = Queries.getQuery("get_objects_by_object_type_id");
-        return getNcObjectsByResultSet(DB_WORKER.executeSelectQuery(query, otId));
+        return getNcObjectsByResultSet(DB_WORKER.executeSelectQuery(query, objectTypeId));
     }
 
     @Override
-    public String getNameByID(Integer id){
+    public String getObjectNameByID(Integer id){
         String query = Queries.getQuery("get_object_name_by_id");
         return DB_WORKER.getStringValueByQuery(query, id);
     }
@@ -87,6 +87,7 @@ public class NcObjectServiceImpl extends NcEntityServiceImpl implements NcObject
         DB_WORKER.executeQuery(query, object.getId(), object.getName(), object.getObjectType().getId(), object.getDescription());
     }
 
+    @SneakyThrows
     private NcObject createNcObjectByResultSet(ResultSet resultSet) throws SQLException {
         return new NcObject(resultSet.getInt(1),
                 resultSet.getString(2),

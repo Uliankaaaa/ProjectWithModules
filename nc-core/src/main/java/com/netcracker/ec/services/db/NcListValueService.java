@@ -7,5 +7,5 @@ import java.util.List;
 public interface NcListValueService extends NcEntityService {
     List<NcEntity> getNcListValuesAsEntitiesByNcAttrTypeDefId(Integer attrTypeDefId);
 
-    String getNcListValueByNcListValueId(Integer ncListValueId);
+    String getListValueByListValueId(Integer listValueId);
 }

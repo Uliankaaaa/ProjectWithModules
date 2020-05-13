@@ -76,7 +76,7 @@ public class Console {
         }
         if (AttributeType.REFERENCE == ncAttrTypeDef.getType()) {
             List<NcEntity> ncEntities =
-                    new NcObjectServiceImpl().getNcObjectsAsEntitiesByObjectTypeId(TelecomConstants.ABSTRACT_ORDER_OBJECT_TYPE);
+                    new NcObjectServiceImpl().getNcObjectsAsEntitiesByObjectTypeId(TelecomConstants.PHONE_NUMBER_OBJECT_TYPE);
             printNcEntity(ncEntities);
         }
         return UserInput.inputString("");
