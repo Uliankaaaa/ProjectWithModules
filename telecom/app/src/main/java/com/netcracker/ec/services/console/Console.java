@@ -7,14 +7,9 @@ import com.netcracker.ec.model.db.NcAttribute;
 import com.netcracker.ec.model.db.NcEntity;
 import com.netcracker.ec.model.domain.enums.AttributeType;
 import com.netcracker.ec.model.domain.order.Order;
-import com.netcracker.ec.provisioning.operations.CreateOrderOperation;
-import com.netcracker.ec.provisioning.operations.ExitOperation;
-import com.netcracker.ec.provisioning.operations.Operation;
-import com.netcracker.ec.provisioning.operations.ShowOrdersOperation;
-import com.netcracker.ec.services.db.NcReferencesService;
+import com.netcracker.ec.provisioning.operations.*;
 import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
 import com.netcracker.ec.services.db.impl.NcObjectServiceImpl;
-import com.netcracker.ec.services.db.impl.NcReferencesServiceImpl;
 import com.netcracker.ec.util.UserInput;
 import com.netcracker.ec.view.Printer;
 

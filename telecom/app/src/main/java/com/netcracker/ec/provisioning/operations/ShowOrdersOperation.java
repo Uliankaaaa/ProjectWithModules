@@ -7,6 +7,7 @@ import com.netcracker.ec.model.db.NcObjectType;
 import com.netcracker.ec.model.domain.enums.AttributeType;
 import com.netcracker.ec.model.domain.order.DisconnectOrder;
 import com.netcracker.ec.model.domain.order.NewOrder;
+import com.netcracker.ec.model.domain.order.Order;
 import com.netcracker.ec.services.db.impl.NcAttributeServiceImpl;
 import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
 import com.netcracker.ec.services.db.impl.NcObjectServiceImpl;
@@ -42,16 +43,15 @@ public class ShowOrdersOperation implements Operation {
     }
 
     private void showAllOrders() {
-        List<NcObject> objects = new NcObjectServiceImpl().getNcObjectsByParentId(TelecomConstants.ABSTRACT_OBJECT_TYPE_ID);
+        List<NcObject> objects = new NcObjectServiceImpl().getNcObjectsByParentId(Order.OBJECT_TYPE);
 
         printOrders(objects);
     }
 
     private void showOrderOfASpecificObjectType() {
         Printer.print("Please Select Object Type.");
-
         List<NcObjectType> objectTypes = new NcObjectTypeServiceImpl().getObjectTypesByParentId(NewOrder.OBJECT_TYPE);
-        objectTypes.addAll(new NcObjectTypeServiceImpl().getObjectTypesByParentId(DisconnectOrder.OBJECT_TYPE));
+
         objectTypes.forEach(objectType -> Printer.print(objectType.toFormattedOutput()));
         Integer objectTypeId = UserInput.nextOperationId();
 
