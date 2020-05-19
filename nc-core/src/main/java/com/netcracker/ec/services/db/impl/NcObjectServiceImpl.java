@@ -71,13 +71,13 @@ public class NcObjectServiceImpl extends NcEntityServiceImpl implements NcObject
 
     @Override
     public List<NcEntity> getNcObjectsAsEntitiesByObjectTypeId(Integer objectTypeId) {
-        String query = Queries.getQuery("get_objects_as_entity_by_ot");
+        String query = Queries.getQuery("get_objects_by_ot");
         return getNcEntitiesByResultSet(DB_WORKER.executeSelectQuery(query, objectTypeId));
     }
 
     @Override
     public List<NcEntity> getNcObjectsAsEntities() {
-        String query = Queries.getQuery("get_objects_as_entities");
+        String query = Queries.getQuery("get_objects");
         return getNcEntitiesByResultSet(DB_WORKER.executeSelectQuery(query));
     }
 
@@ -88,7 +88,7 @@ public class NcObjectServiceImpl extends NcEntityServiceImpl implements NcObject
     }
 
     @SneakyThrows
-    private NcObject createNcObjectByResultSet(ResultSet resultSet) throws SQLException {
+    private NcObject createNcObjectByResultSet(ResultSet resultSet) {
         return new NcObject(resultSet.getInt(1),
                 resultSet.getString(2),
                 new NcObjectTypeServiceImpl().getNcObjectTypeById(resultSet.getInt(3)));
