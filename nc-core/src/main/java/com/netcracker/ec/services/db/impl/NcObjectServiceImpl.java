@@ -66,7 +66,8 @@ public class NcObjectServiceImpl extends NcEntityServiceImpl implements NcObject
     @SneakyThrows
     @Override
     public NcObject getNcObjectById(Integer objectId) {
-        throw new NotImplementedException();
+        String query = Queries.getQuery("get_object_by_id");
+        return createNcObjectByResultSet(DB_WORKER.executeSelectQuery(query, objectId));
     }
 
     @Override
