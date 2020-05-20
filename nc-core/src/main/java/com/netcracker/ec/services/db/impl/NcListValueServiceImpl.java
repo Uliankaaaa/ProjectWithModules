@@ -19,4 +19,10 @@ public class NcListValueServiceImpl extends NcEntityServiceImpl implements NcLis
         String query = Queries.getQuery("get_list_values_by_attr_type_def");
         return getNcEntitiesByResultSet(DB_WORKER.executeSelectQuery(query, attrTypeDefId));
     }
+
+    @Override
+    public String getListValueByListValueId(Integer listValueId){
+        String query = Queries.getQuery("get_list_value_by_list_value_id");
+        return DB_WORKER.getStringValueByQuery(query, listValueId);
+    }
 }

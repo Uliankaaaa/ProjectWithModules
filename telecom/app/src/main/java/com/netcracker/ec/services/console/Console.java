@@ -1,15 +1,13 @@
 package com.netcracker.ec.services.console;
 
+import com.netcracker.ec.common.TelecomConstants;
 import com.netcracker.ec.domain.enums.OperationType;
 import com.netcracker.ec.model.db.NcAttrTypeDef;
 import com.netcracker.ec.model.db.NcAttribute;
 import com.netcracker.ec.model.db.NcEntity;
 import com.netcracker.ec.model.domain.enums.AttributeType;
 import com.netcracker.ec.model.domain.order.Order;
-import com.netcracker.ec.provisioning.operations.CreateOrderOperation;
-import com.netcracker.ec.provisioning.operations.ExitOperation;
-import com.netcracker.ec.provisioning.operations.Operation;
-import com.netcracker.ec.provisioning.operations.ShowOrdersOperation;
+import com.netcracker.ec.provisioning.operations.*;
 import com.netcracker.ec.services.db.impl.NcListValueServiceImpl;
 import com.netcracker.ec.services.db.impl.NcObjectServiceImpl;
 import com.netcracker.ec.util.UserInput;
@@ -73,13 +71,13 @@ public class Console {
         }
         if (AttributeType.REFERENCE == ncAttrTypeDef.getType()) {
             List<NcEntity> ncEntities =
-                    new NcObjectServiceImpl().getNcObjectsAsEntitiesByObjectTypeId(10);
+                    new NcObjectServiceImpl().getNcObjectsAsEntitiesByObjectTypeId(TelecomConstants.PHONE_NUMBER_OBJECT_TYPE);
             printNcEntity(ncEntities);
         }
         return UserInput.inputString("");
     }
 
-    private void printNcEntity(List<NcEntity> ncEntities){
+    private void printNcEntity(List<NcEntity> ncEntities) {
         for (NcEntity ncEntity : ncEntities) {
             Printer.print(ncEntity.toFormattedOutput());
         }

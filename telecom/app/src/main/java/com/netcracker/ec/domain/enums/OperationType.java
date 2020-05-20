@@ -11,7 +11,6 @@ public enum OperationType {
     EXIT(0, "Exit"),
     CREATE_ORDER(1, "Create Order"),
     SHOW_ORDERS(2, "Show Orders");
-
     private Integer id;
     private String name;
 

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface NcListValueService extends NcEntityService {
     List<NcEntity> getNcListValuesAsEntitiesByNcAttrTypeDefId(Integer attrTypeDefId);
+
+    String getListValueByListValueId(Integer listValueId);
 }
